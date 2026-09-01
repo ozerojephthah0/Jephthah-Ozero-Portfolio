@@ -11,11 +11,23 @@ import {
   Layers,
   Heart,
   Target,
+  Download,
 } from 'lucide-react';
+import { downloadPdfCv } from '../../utils/generatePdfCv';
 
 export const AboutSection: React.FC = () => {
-  const { data, scrollToSection } = usePortfolio();
+  const { data, scrollToSection, addToast } = usePortfolio();
   const { profile } = data;
+
+  const handleDownloadCV = () => {
+    try {
+      downloadPdfCv(data);
+      addToast(`Official PDF CV for ${profile.name} downloaded successfully!`, 'success');
+    } catch (err) {
+      console.error(err);
+      addToast('Failed to download PDF CV', 'error');
+    }
+  };
 
   return (
     <section id="about" className="py-20 relative">
@@ -155,6 +167,15 @@ export const AboutSection: React.FC = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                id="about-download-cv-btn"
+                onClick={handleDownloadCV}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download PDF CV</span>
+              </button>
+
               <button
                 onClick={() => scrollToSection('projects')}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold hover:bg-neutral-800 dark:hover:bg-neutral-100 shadow transition-all cursor-pointer"

@@ -19,6 +19,7 @@ import {
   Dribbble,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { downloadPdfCv } from '../../utils/generatePdfCv';
 
 export const HeroSection: React.FC = () => {
   const { data, scrollToSection, addToast } = usePortfolio();
@@ -72,7 +73,7 @@ export const HeroSection: React.FC = () => {
     if (isRightSwipe) handlePrevSlide();
   };
 
-  // Download CV function
+  // Download CV function in PDF format
   const handleDownloadCV = () => {
     confetti({
       particleCount: 50,
@@ -80,57 +81,13 @@ export const HeroSection: React.FC = () => {
       origin: { y: 0.8 },
     });
 
-    const resumeContent = `=====================================================
-${profile.name.toUpperCase()} — CURRICULUM VITAE
-=====================================================
-Title: ${profile.title}
-Email: ${profile.email} | Location: ${profile.location}
-Tagline: ${profile.tagline}
-
-PROFESSIONAL SUMMARY
------------------------------------------------------
-${profile.bio}
-
-CORE METRICS
------------------------------------------------------
-• Years of Experience: ${profile.yearsExperience}+ Years
-• Completed Production Projects: ${profile.completedProjectsCount}+
-• Client Satisfaction Rate: ${profile.clientSatisfactionRate}%
-• Availability: ${profile.availability}
-
-CORE TECHNICAL SKILLS
------------------------------------------------------
-${data.skills.map((s) => `• ${s.name} (${s.levelLabel}) - ${s.category}`).join('\n')}
-
-SELECTED KEY PROJECTS
------------------------------------------------------
-${data.projects.slice(0, 4).map((p) => `• ${p.title} [${p.category}]
-  ${p.shortDescription}
-  Tech: ${p.tags.join(', ')}`).join('\n\n')}
-
-EXPERIENCE & EDUCATION
------------------------------------------------------
-${data.journey.map((j) => `• ${j.title} — ${j.organization} (${j.startDate} to ${j.endDate || 'Present'})
-  ${j.description}`).join('\n\n')}
-
-AWARDS & RECOGNITIONS
------------------------------------------------------
-${data.achievements.map((a) => `• ${a.title} — ${a.issuer} (${a.date})`).join('\n')}
-
-Generated via ${profile.name}'s AI Portfolio Platform
-=====================================================`;
-
-    const blob = new Blob([resumeContent], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${profile.name.replace(/\s+/g, '_')}_CV_Resume.txt`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    addToast(`CV for ${profile.name} downloaded successfully!`, 'success');
+    try {
+      downloadPdfCv(data);
+      addToast(`Official PDF CV for ${profile.name} downloaded successfully!`, 'success');
+    } catch (err: any) {
+      console.error('PDF Generation Error:', err);
+      addToast('Failed to generate PDF CV. Please try again.', 'error');
+    }
   };
 
   const currentSlide = activeSlides[currentSlideIndex] || activeSlides[0];

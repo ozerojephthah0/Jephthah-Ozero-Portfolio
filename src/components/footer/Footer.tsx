@@ -12,11 +12,23 @@ import {
   MessageCircle,
   Mail,
   ExternalLink,
+  Download,
 } from 'lucide-react';
+import { downloadPdfCv } from '../../utils/generatePdfCv';
 
 export const Footer: React.FC = () => {
-  const { data, scrollToSection, setIsAuthModalOpen } = usePortfolio();
+  const { data, scrollToSection, setIsAuthModalOpen, addToast } = usePortfolio();
   const { profile } = data;
+
+  const handleDownloadCV = () => {
+    try {
+      downloadPdfCv(data);
+      addToast(`Official PDF CV for ${profile.name} downloaded successfully!`, 'success');
+    } catch (err) {
+      console.error(err);
+      addToast('Failed to download PDF CV', 'error');
+    }
+  };
 
   const [currentTime, setCurrentTime] = useState('');
   const [legalModalContent, setLegalModalContent] = useState<{ title: string; body: string } | null>(null);
@@ -135,6 +147,14 @@ export const Footer: React.FC = () => {
                   {item.label}
                 </button>
               ))}
+              <button
+                id="footer-download-pdf-cv-btn"
+                onClick={handleDownloadCV}
+                className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold hover:underline text-left transition-colors cursor-pointer w-fit flex items-center gap-1.5 pt-1"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download CV (PDF)</span>
+              </button>
             </div>
           </div>
 

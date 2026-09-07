@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { downloadPdfCv } from '../../utils/generatePdfCv';
+import defaultExecutivePortrait from '../../assets/images/jephthah_executive_portrait_uploaded.png';
 
 export const HeroSection: React.FC = () => {
   const { data, scrollToSection, addToast } = usePortfolio();
@@ -242,12 +243,12 @@ export const HeroSection: React.FC = () => {
                 <div className="relative w-52 h-64 sm:w-60 sm:h-72 rounded-2xl overflow-hidden shadow-inner border-2 border-white/40 dark:border-neutral-700/50 mb-4 bg-neutral-100 dark:bg-neutral-800">
                   <img
                     id="hero-avatar-image"
-                    src={profile.heroAvatarUrl || profile.avatarUrl || '/assets/jephthah_portrait.jpg'}
+                    src={profile.heroAvatarUrl && profile.heroAvatarUrl !== '/assets/jephthah_portrait.jpg' ? profile.heroAvatarUrl : defaultExecutivePortrait}
                     alt={profile.name}
                     className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     referrerPolicy="no-referrer"
                     onError={(e: any) => {
-                      e.target.src = '/assets/jephthah_portrait.jpg';
+                      e.target.src = defaultExecutivePortrait;
                     }}
                   />
                   <div className="absolute bottom-2.5 left-2.5 right-2.5 px-3 py-1.5 rounded-xl bg-neutral-950/85 backdrop-blur-md text-[11px] font-medium text-white flex items-center justify-between border border-white/10 shadow-lg">

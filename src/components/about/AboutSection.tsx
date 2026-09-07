@@ -14,6 +14,7 @@ import {
   Download,
 } from 'lucide-react';
 import { downloadPdfCv } from '../../utils/generatePdfCv';
+import defaultExecutivePortrait from '../../assets/images/jephthah_executive_portrait_uploaded.png';
 
 export const AboutSection: React.FC = () => {
   const { data, scrollToSection, addToast } = usePortfolio();
@@ -60,12 +61,12 @@ export const AboutSection: React.FC = () => {
                 <div className="relative h-80 sm:h-96 w-full rounded-2xl overflow-hidden bg-neutral-900 mb-4">
                   <img
                     id="about-avatar-image"
-                    src={profile.aboutAvatarUrl || profile.avatarUrl || '/assets/jephthah_portrait.jpg'}
+                    src={profile.aboutAvatarUrl && profile.aboutAvatarUrl !== '/assets/jephthah_portrait.jpg' ? profile.aboutAvatarUrl : defaultExecutivePortrait}
                     alt={profile.name}
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     referrerPolicy="no-referrer"
                     onError={(e: any) => {
-                      e.target.src = '/assets/jephthah_portrait.jpg';
+                      e.target.src = defaultExecutivePortrait;
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-transparent to-transparent" />

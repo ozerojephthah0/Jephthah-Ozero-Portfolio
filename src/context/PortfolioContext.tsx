@@ -158,10 +158,11 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const login = async (email: string, password?: string): Promise<boolean> => {
     try {
       const res = await api.login(email, password);
-      if (res.success && res.user) {
+      if (res.success && res.user && res.token) {
         setCurrentUser(res.user);
         setIsAdmin(true);
         localStorage.setItem('portfolio_auth_user', JSON.stringify(res.user));
+        localStorage.setItem('portfolio_auth_token', res.token);
         addToast(`Welcome back, ${res.user.name}! Admin session verified.`, 'success');
         setIsAuthModalOpen(false);
         setIsAdminDashboardOpen(true);
@@ -177,10 +178,11 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const socialLogin = async (provider: string): Promise<boolean> => {
     try {
       const res = await api.socialLogin(provider, 'ozerojephthah0@gmail.com', 'Jephthah Ozero');
-      if (res.success && res.user) {
+      if (res.success && res.user && res.token) {
         setCurrentUser(res.user);
         setIsAdmin(true);
         localStorage.setItem('portfolio_auth_user', JSON.stringify(res.user));
+        localStorage.setItem('portfolio_auth_token', res.token);
         addToast(`Welcome back, Jephthah! Authenticated via ${provider}.`, 'success');
         setIsAuthModalOpen(false);
         setIsAdminDashboardOpen(true);
@@ -198,6 +200,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setIsAdmin(false);
     setIsAdminDashboardOpen(false);
     localStorage.removeItem('portfolio_auth_user');
+    localStorage.removeItem('portfolio_auth_token');
     addToast('Logged out of Admin session.', 'info');
   };
 

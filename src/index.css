@@ -55,3 +55,13 @@ html {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(64, 64, 64, 0.5);
 }
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%) rotate(-12deg);
+  }
+  100% {
+    transform: translateY(350%) rotate(-12deg);
+  }
+}
+

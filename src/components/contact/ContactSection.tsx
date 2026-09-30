@@ -341,6 +341,20 @@ export const ContactSection: React.FC = () => {
                     />
                   </div>
 
+                  {/* Hidden Anti-Bot Honeypot Trap (Invisible to humans, catches automated spambots) */}
+                  <div className="hidden" aria-hidden="true">
+                    <label htmlFor="website_url_hp">Leave this field blank</label>
+                    <input
+                      id="website_url_hp"
+                      type="text"
+                      name="website_url_hp"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={(formData as any).website_url_hp || ''}
+                      onChange={(e) => setFormData({ ...formData, website_url_hp: e.target.value } as any)}
+                    />
+                  </div>
+
                   {/* Message */}
                   <div>
                     <label className="text-xs font-semibold text-neutral-700 dark:text-neutral-300 block mb-1.5">

@@ -21,6 +21,7 @@ import { AuthModal } from './components/auth/AuthModal';
 import { AdminDashboardModal } from './components/admin/AdminDashboardModal';
 import { ToastContainer } from './components/common/ToastContainer';
 import { FloatingWhatsAppButton } from './components/common/FloatingWhatsAppButton';
+import { MouseFollowerEffect } from './components/effects/MouseFollowerEffect';
 
 const PortfolioApp: React.FC = () => {
   const { selectedProject, setSelectedProject } = usePortfolio();
@@ -28,6 +29,9 @@ const PortfolioApp: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-sans selection:bg-indigo-500 selection:text-white transition-colors duration-200">
+      {/* Interactive Mouse Follower & Ambient Particle Effect */}
+      <MouseFollowerEffect />
+
       {/* Top Header */}
       <TopHeader onOpenMobileMenu={() => setIsMobileMenuOpen(true)} />
 

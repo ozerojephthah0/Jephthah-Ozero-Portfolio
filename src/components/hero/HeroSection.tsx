@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { downloadPdfCv } from '../../utils/generatePdfCv';
+import { HeroAnimatedAvatar } from './HeroAnimatedAvatar';
 import defaultExecutivePortrait from '../../assets/images/jephthah_executive_portrait_uploaded.png';
 
 export const HeroSection: React.FC = () => {
@@ -235,61 +236,13 @@ export const HeroSection: React.FC = () => {
           {/* Right Column: AI Avatar Card & Dynamic Carousel (5 cols) */}
           <div className="lg:col-span-5 flex flex-col items-center gap-6">
             
-            {/* Main Avatar Presentation Card */}
-            <div className="relative group w-full max-w-sm">
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 rounded-3xl blur-md opacity-40 group-hover:opacity-75 transition duration-500" />
-              
-              <div className="relative glass-panel rounded-2xl p-4 flex flex-col items-center text-center overflow-hidden">
-                <div className="relative w-52 h-64 sm:w-60 sm:h-72 rounded-2xl overflow-hidden shadow-inner border-2 border-white/40 dark:border-neutral-700/50 mb-4 bg-neutral-100 dark:bg-neutral-800">
-                  <img
-                    id="hero-avatar-image"
-                    src={profile.heroAvatarUrl && profile.heroAvatarUrl !== '/assets/jephthah_portrait.jpg' ? profile.heroAvatarUrl : defaultExecutivePortrait}
-                    alt={profile.name}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    referrerPolicy="no-referrer"
-                    onError={(e: any) => {
-                      e.target.src = defaultExecutivePortrait;
-                    }}
-                  />
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 px-3 py-1.5 rounded-xl bg-neutral-950/85 backdrop-blur-md text-[11px] font-medium text-white flex items-center justify-between border border-white/10 shadow-lg">
-                    <span className="flex items-center gap-1.5 font-semibold text-neutral-200">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>{profile.name}</span>
-                    </span>
-                    <span className="text-[10px] text-emerald-400 font-semibold px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-800/60">
-                      Available
-                    </span>
-                  </div>
-                </div>
-
-                <div className="w-full grid grid-cols-3 gap-2 text-center py-2 border-t border-neutral-200/60 dark:border-neutral-800/60">
-                  <div className="p-2 rounded-xl bg-neutral-100/70 dark:bg-neutral-800/60">
-                    <span className="block text-lg font-bold font-display text-indigo-600 dark:text-indigo-400">
-                      {profile.yearsExperience}+
-                    </span>
-                    <span className="text-[10px] text-neutral-500 dark:text-neutral-400 font-medium">
-                      Years Exp.
-                    </span>
-                  </div>
-                  <div className="p-2 rounded-xl bg-neutral-100/70 dark:bg-neutral-800/60">
-                    <span className="block text-lg font-bold font-display text-purple-600 dark:text-purple-400">
-                      {profile.completedProjectsCount}+
-                    </span>
-                    <span className="text-[10px] text-neutral-500 dark:text-neutral-400 font-medium">
-                      Projects
-                    </span>
-                  </div>
-                  <div className="p-2 rounded-xl bg-neutral-100/70 dark:bg-neutral-800/60">
-                    <span className="block text-lg font-bold font-display text-pink-600 dark:text-pink-400">
-                      {profile.clientSatisfactionRate}%
-                    </span>
-                    <span className="text-[10px] text-neutral-500 dark:text-neutral-400 font-medium">
-                      Satisfaction
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Main Interactive Animated Avatar Card */}
+            <HeroAnimatedAvatar
+              photoUrl={profile.heroAvatarUrl}
+              name={profile.name}
+              title={profile.title}
+              availability={profile.availability}
+            />
 
             {/* Real Interactive Dynamic Carousel / Slideshow */}
             {currentSlide && (

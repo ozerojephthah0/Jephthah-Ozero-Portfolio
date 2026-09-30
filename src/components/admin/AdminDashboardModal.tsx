@@ -35,9 +35,12 @@ import {
   Eye,
   Send,
   LogOut,
-  Download,
   AlertTriangle,
   RotateCcw,
+  ShieldCheck,
+  Lock,
+  Zap,
+  Server,
 } from 'lucide-react';
 
 export const AdminDashboardModal: React.FC = () => {
@@ -63,6 +66,7 @@ export const AdminDashboardModal: React.FC = () => {
     | 'services'
     | 'avatars'
     | 'messages'
+    | 'security'
     | 'logs'
     | 'settings'
   >('profile');
@@ -363,6 +367,7 @@ export const AdminDashboardModal: React.FC = () => {
               { id: 'services', label: 'Services', icon: Layers, count: data.services?.length },
               { id: 'avatars', label: 'AI Avatars', icon: Sparkles, count: data.avatars?.length },
               { id: 'messages', label: 'Inbox Messages', icon: Inbox, count: unreadCount, badgeColor: 'bg-rose-500' },
+              { id: 'security', label: 'Security & Firewall', icon: ShieldCheck },
               { id: 'logs', label: 'Activity Logs', icon: Activity },
               { id: 'settings', label: 'Settings & SEO', icon: Settings },
             ].map((tab) => {
@@ -1066,7 +1071,124 @@ export const AdminDashboardModal: React.FC = () => {
               </div>
             )}
 
-            {/* TAB 12: SETTINGS */}
+            {/* TAB: SECURITY & FIREWALL CENTER */}
+            {activeTab === 'security' && (
+              <div className="max-w-4xl space-y-6">
+                <div className="flex items-center justify-between pb-2 border-b border-neutral-200 dark:border-neutral-800">
+                  <div>
+                    <h3 className="text-lg font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+                      <ShieldCheck className="w-5 h-5 text-emerald-500" />
+                      <span>Security Center & Threat Protection</span>
+                    </h3>
+                    <p className="text-xs text-neutral-500">
+                      Real-time defensive posture, cryptographic session controls, and firewall telemetry.
+                    </p>
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800">
+                    Shield Active & Enforced
+                  </span>
+                </div>
+
+                {/* 4 Key Security Indicators */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400">Authentication</span>
+                      <Lock className="w-4 h-4 text-indigo-500" />
+                    </div>
+                    <span className="text-sm font-bold text-neutral-900 dark:text-white block">HMAC-SHA256</span>
+                    <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Cryptographically Signed</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400">Rate Limiter</span>
+                      <Zap className="w-4 h-4 text-purple-500" />
+                    </div>
+                    <span className="text-sm font-bold text-neutral-900 dark:text-white block">3 Slotted Guards</span>
+                    <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Anti-Brute Force / DDoS</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400">Bot Traps</span>
+                      <Shield className="w-4 h-4 text-emerald-500" />
+                    </div>
+                    <span className="text-sm font-bold text-neutral-900 dark:text-white block">Honeypot + Math</span>
+                    <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Automatic Spambot Drop</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400">Headers & CSP</span>
+                      <Server className="w-4 h-4 text-pink-500" />
+                    </div>
+                    <span className="text-sm font-bold text-neutral-900 dark:text-white block">HSTS & Strict CSP</span>
+                    <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">XSS / Clickjack Blocked</span>
+                  </div>
+                </div>
+
+                {/* Active Defense Rules Checklist */}
+                <div className="p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 space-y-3">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-white">
+                    Active Hardening & Policy Enforcement
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span><strong>BOLA / IDOR Defense:</strong> All mutating routes check Bearer JWT</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span><strong>HSTS:</strong> Enforced Strict Transport Security (max-age 1 year)</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span><strong>XSS Filter:</strong> Recursive sanitization strips scripts & handlers</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span><strong>Clickjacking Defense:</strong> X-Frame-Options set to SAMEORIGIN</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span><strong>MIME Sniffing Block:</strong> X-Content-Type-Options: nosniff</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span><strong>Data Privacy:</strong> Inbox messages blocked from public API</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Emergency Actions: Rotate Session Encryption Keys */}
+                <div className="p-5 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-xs font-bold text-indigo-900 dark:text-indigo-200">
+                        Cryptographic Key Rotation
+                      </h4>
+                      <p className="text-[11px] text-neutral-600 dark:text-neutral-400">
+                        Rotate session secret keys immediately to invalidate all active session tokens across devices.
+                      </p>
+                    </div>
+                    <button
+                      onClick={async () => {
+                        try {
+                          const res = await api.rotateSessionKeys();
+                          addToast(res.message, 'success');
+                        } catch (e) {
+                          addToast('Failed to rotate keys', 'error');
+                        }
+                      }}
+                      className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow transition-all cursor-pointer whitespace-nowrap"
+                    >
+                      Rotate Session Keys Now
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
             {activeTab === 'settings' && (
               <div className="max-w-2xl space-y-6">
                 <h3 className="text-base font-bold text-neutral-900 dark:text-white">
